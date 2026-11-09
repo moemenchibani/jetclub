@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jet Club — Gym &amp; Fitness</title>
+<meta name="description" content="Jet Club Radès — musculation, cardio mix, spinning, pump, Grit/TRX and danse orientale. Accès libre 100 DT/month. Call 22 065 780.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#09090A; --surface:#141416; --surface-2:#1B1B1E; --line:#26262A;
+  --text:#F2F0EB; --muted:#A8A49D; --dim:#8C8A85;
+  --accent:#A8E63A; --accent-ink:#09090A; --light:#F2F0EB; --light-ink:#09090A; --light-muted:#45433F; --accent-dark:#3F6B00;
+  --display:Anton, Impact, "Arial Narrow", sans-serif;
+  --body:"Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:dark;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ color-scheme:dark; } }
+:root[data-theme="dark"]{ color-scheme:dark; }
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(80px + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:rgba(9,9,10,.9)}
+img{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:clamp(20px,4vw,40px)}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.2px;margin:0;line-height:.95}
+h2{font-size:clamp(46px,7vw,96px)}
+p{margin:0}
+
+/* progress bar */
+.progress{position:fixed;top:env(safe-area-inset-top,0px);left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--accent);z-index:70}
+
+/* header */
+.header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(9,9,10,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
+.header.scrolled{border-bottom-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;height:72px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo span{font-family:var(--display);font-size:26px;letter-spacing:1px}
+.links{display:flex;align-items:center;gap:30px;font-size:15px}
+.links a{text-decoration:none;color:var(--text);position:relative;padding:6px 0}
+.links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform .3s}
+.links a:not(.btn):hover::after{transform:scaleX(1);transform-origin:left}
+.menu-btn{display:none;background:none;border:1px solid var(--line);color:var(--text);width:48px;height:48px;border-radius:12px;cursor:pointer;align-items:center;justify-content:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:14px 26px;border-radius:999px;font-weight:700;font-size:16px;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .2s,background-color .2s,color .2s,border-color .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover{background:#C2F25E}
+.btn-ghost{border-color:#3A3A3F;color:var(--text)}
+.btn-ghost:hover{border-color:var(--text)}
+.links .btn{padding:10px 20px;min-height:44px}
+
+/* hero */
+.hero{position:relative;min-height:calc(100svh - 72px);display:flex;align-items:center;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.ring{position:absolute;border-radius:50%;border:1px solid var(--accent);pointer-events:none;animation:pulse 3.4s ease-in-out infinite}
+.hero-inner{position:relative;width:100%;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:48px;padding-block:80px}
+.hero-copy{flex:999 1 620px;min-width:0}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-size:15px;color:var(--muted);margin-bottom:26px}
+.kicker i{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:blink 1.4s ease-in-out infinite}
+.hero h1{font-size:clamp(66px,12vw,184px);line-height:.9}
+.line{display:block;overflow:hidden;padding-bottom:.04em}
+.line > span{display:block;transform:translateY(110%)}
+.loaded .line > span{animation:rise 1s cubic-bezier(.2,.8,.2,1) forwards}
+.loaded .line:nth-child(2) > span{animation-delay:.12s}
+.loaded .line:nth-child(3) > span{animation-delay:.24s}
+.thrust{color:var(--accent);display:inline-block}
+.hero-sub{margin-top:30px;max-width:30em;font-size:19px;color:#CFCBC4}
+.hero-cta{margin-top:38px;display:flex;flex-wrap:wrap;gap:14px}
+.fade-in{opacity:0;transform:translateY(24px)}
+.loaded .fade-in{animation:fadeUp .9s cubic-bezier(.2,.8,.2,1) forwards}
+.loaded .d3{animation-delay:.5s}.loaded .d4{animation-delay:.7s}
+.badge{flex:1 1 200px;display:flex;justify-content:flex-end}
+.badge svg{animation:spin 18s linear infinite;width:clamp(140px,16vw,200px);height:auto}
+
+/* marquee */
+.band{background:var(--accent);color:var(--accent-ink);overflow:hidden;padding:18px 0;transform:rotate(-1.5deg);margin:-12px -24px 0;position:relative;z-index:2}
+.track{display:flex;width:max-content;gap:40px;animation:marquee 30s linear infinite;font-family:var(--display);font-size:clamp(26px,3vw,36px);text-transform:uppercase;white-space:nowrap}
+.track span{display:flex;align-items:center;gap:40px}
+.track span::after{content:"";width:12px;height:12px;background:var(--accent-ink);transform:rotate(45deg)}
+
+/* about */
+.about{padding-block:clamp(100px,12vw,160px) clamp(80px,10vw,130px)}
+.about-top{display:flex;flex-wrap:wrap;gap:56px}
+.about-top > *{flex:1 1 420px;min-width:0}
+.about-text{display:flex;flex-direction:column;gap:20px;font-size:18px;color:#CFCBC4;max-width:34em}
+.perks{margin-top:80px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.perk{background:var(--bg);padding:34px 30px;display:flex;flex-direction:column;gap:14px;transition:background-color .3s}
+.perk:hover{background:var(--surface)}
+.perk h3{font-family:var(--body);text-transform:none;font-weight:700;font-size:22px;line-height:1.2}
+.perk p{color:var(--muted);font-size:16px}
+
+/* programs */
+.programs{background:var(--light);color:var(--light-ink);padding-block:clamp(100px,12vw,150px)}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:56px}
+.sec-head p{max-width:24em;font-size:17px}
+.programs .sec-head p{color:var(--light-muted)}
+.prog-list{border-top:2px solid var(--light-ink)}
+.prog{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) auto;gap:32px;align-items:center;padding:28px 0;border-bottom:1px solid #CFCBC4;text-decoration:none;color:inherit;position:relative;cursor:default}
+.prog h3{font-size:clamp(38px,5vw,68px);transition:transform .4s cubic-bezier(.2,.8,.2,1),color .3s}
+.prog p{color:var(--light-muted);font-size:17px;max-width:28em}
+.prog .arrow{width:56px;height:56px;border-radius:50%;border:1px solid var(--light-ink);display:flex;align-items:center;justify-content:center;transition:background-color .3s,color .3s,transform .4s}
+.prog:hover h3{transform:translateX(14px);color:var(--accent-dark)}
+.prog:hover .arrow{background:var(--light-ink);color:var(--light);transform:rotate(-45deg)}
+
+/* gallery */
+.gallery{padding-block:clamp(100px,12vw,150px) 40px}
+.ig{color:var(--accent);font-weight:700;text-decoration:none}
+.ig:hover{text-decoration:underline}
+.grid-ph{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:240px;gap:16px}
+.ph{border-radius:18px;background:repeating-linear-gradient(135deg,#141416 0 14px,#19191C 14px 28px);display:flex;align-items:flex-end;padding:18px;font-size:14px;color:var(--dim);overflow:hidden;position:relative}
+.ph.big{grid-column:span 2;grid-row:span 2}
+.ph.wide{grid-column:span 2}
+
+.ig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.ig-card{display:flex;flex-direction:column;gap:12px;padding:32px;border-radius:22px;border:1px solid var(--line);background:var(--surface);text-decoration:none;color:var(--text);min-height:240px;transition:border-color .3s,transform .3s}
+.ig-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.ig-card h3{font-size:34px}
+.ig-card p{color:var(--muted);flex-grow:1}
+.ig-go{color:var(--accent);font-weight:700}
+/* plans */
+.plans{padding-block:clamp(80px,10vw,120px) clamp(100px,12vw,150px)}
+.plans .sec-head{flex-direction:column;align-items:center;text-align:center}
+.toggle{display:inline-flex;padding:6px;border-radius:999px;background:var(--surface);border:1px solid var(--line);position:relative}
+.toggle button{position:relative;z-index:1;border:0;background:none;color:var(--text);font:inherit;font-weight:700;font-size:15px;min-height:44px;padding:10px 26px;border-radius:999px;cursor:pointer;transition:color .3s}
+.toggle button[aria-pressed="true"]{color:var(--accent-ink)}
+.toggle .pill{position:absolute;top:6px;bottom:6px;left:6px;border-radius:999px;background:var(--accent);transition:transform .35s cubic-bezier(.2,.8,.2,1),width .35s}
+.plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px}
+.plan{border:1px solid var(--line);border-radius:24px;padding:34px 30px;display:flex;flex-direction:column;gap:20px;position:relative;background:var(--bg)}
+.plan.featured{border-color:var(--accent);background:var(--surface);transform:translateY(-12px)}
+.plan .tag{position:absolute;top:20px;right:20px;background:var(--accent);color:var(--accent-ink);font-size:13px;font-weight:700;padding:5px 12px;border-radius:999px}
+.plan h3{font-size:36px}
+.price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.price strong{font-family:var(--display);font-weight:400;font-size:54px;color:var(--accent);line-height:1}
+.price span{color:var(--muted)}
+.price .swap{display:inline-block;transition:opacity .25s,transform .25s}
+.price .swap.out{opacity:0;transform:translateY(-8px)}
+.plan > p{color:#CFCBC4}
+.plan ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;flex-grow:1}
+.plan li{display:flex;gap:12px;align-items:flex-start}
+.plan li svg{flex-shrink:0;margin-top:4px}
+.commit{margin-top:28px;border:1px solid var(--line);border-radius:24px;padding:clamp(28px,4vw,44px);display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;align-items:center;background:linear-gradient(120deg,var(--surface),var(--bg))}
+.commit-copy{flex:1 1 360px;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.commit-copy h3{font-size:clamp(34px,4vw,52px)}
+.commit-copy p{color:var(--muted)}
+.commit-result{flex:1 1 260px;display:flex;flex-direction:column;gap:6px;align-items:flex-end;text-align:right}
+.commit-result .price{justify-content:flex-end}
+.commit-result .price strong{font-size:clamp(64px,8vw,96px)}
+.save{color:var(--accent);font-weight:700}
+@media (max-width:640px){.commit-result{align-items:flex-start;text-align:left}.commit-result .price{justify-content:flex-start}}
+.note{margin-top:28px;text-align:center;color:var(--dim);font-size:14px}
+
+/* visit */
+.visit{position:relative;overflow:hidden;background:var(--accent);color:var(--accent-ink)}
+.visit .ghost{position:absolute;inset:0;display:flex;align-items:center;opacity:.11;pointer-events:none}
+.visit .ghost .track{font-size:clamp(160px,22vw,300px);gap:80px;animation-duration:45s}
+.visit .ghost .track span::after{display:none}
+.visit-inner{position:relative;display:flex;flex-wrap:wrap;gap:56px;justify-content:space-between;align-items:flex-end;padding-block:clamp(100px,12vw,150px)}
+.visit-copy{flex:999 1 560px;min-width:0}
+.visit h2{font-size:clamp(58px,9vw,140px)}
+.visit-cta{margin-top:40px;display:flex;flex-wrap:wrap;gap:14px}
+.btn-dark{background:var(--accent-ink);color:var(--text)}
+.btn-dark:hover{background:#222}
+.btn-line{border:2px solid var(--accent-ink);color:var(--accent-ink)}
+.info{flex:1 1 300px;background:var(--accent-ink);color:var(--text);border-radius:24px;padding:32px;display:flex;flex-direction:column;gap:22px}
+.info dt{font-size:14px;color:var(--muted);margin-bottom:4px}
+.info dd{margin:0;font-size:18px}
+.info a{color:var(--accent);text-decoration:none}
+
+footer{border-top:1px solid var(--line)}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;padding-block:32px;color:var(--dim);font-size:14px}
+.foot .logo span{color:var(--text);font-size:22px}
+.foot a{text-decoration:none}
+.foot a:hover{color:var(--text)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+@keyframes rise{to{transform:translateY(0)}}
+@keyframes fadeUp{to{opacity:1;transform:none}}
+@keyframes marquee{to{transform:translateX(-50%)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.12);opacity:.15}}
+@keyframes blink{50%{opacity:.25}}
+
+/* mobile */
+@media (max-width: 860px){
+  .menu-btn{display:inline-flex}
+  .links{position:absolute;top:72px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;padding:8px 20px 24px;background:rgba(9,9,10,.97);border-bottom:1px solid var(--line);transform:translateY(-8px);opacity:0;visibility:hidden;transition:opacity .25s,transform .25s,visibility .25s}
+  .links.open{opacity:1;transform:none;visibility:visible}
+  .links a{padding:16px 0;font-size:20px;border-bottom:1px solid var(--line)}
+  .links a:not(.btn)::after{display:none}
+  .links .btn{margin-top:16px;border-bottom:0}
+  .prog{grid-template-columns:minmax(0,1fr) auto;gap:12px 20px}
+  .prog p{grid-column:1 / -1;grid-row:2}
+  .grid-ph{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:180px}
+  .plan.featured{transform:none}
+}
+@media (max-width: 520px){
+  .grid-ph{grid-template-columns:minmax(0,1fr)}
+  .ph.big,.ph.wide{grid-column:auto;grid-row:auto}
+  .ring{display:none}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .line > span,.fade-in,.reveal{transform:none !important;opacity:1 !important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="header" id="header">
+  <nav class="wrap nav" aria-label="Main">
+    <a href="#top" class="logo" aria-label="Jet Club home">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M4 22 L20 6 L30 6 L14 22 Z" fill="#A8E63A"/><path d="M4 28 L12 20 L18 20 L10 28 Z" fill="#F2F0EB"/></svg>
+      <span style="font-style:italic">JET <b style="font-weight:400;color:#A8E63A">CLUB</b></span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="links">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path id="menuIcon" d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <div class="links" id="links">
+      <a href="#about">The club</a>
+      <a href="#programs">Programs</a>
+      <a href="#plans">Membership</a>
+      <a href="#visit">Visit</a>
+      <a href="#plans" class="btn btn-primary">Join now</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <canvas id="streaks" aria-hidden="true"></canvas>
+  <div class="ring" style="right:-160px;top:8%;width:640px;height:640px" aria-hidden="true"></div>
+  <div class="ring" style="right:-50px;top:22%;width:420px;height:420px;animation-delay:1.2s" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <p class="kicker fade-in"><i aria-hidden="true"></i><span id="heroStatus">Gym and fitness club in Radès</span></p>
+      <h1>
+        <span class="line"><span>Take off.</span></span>
+        <span class="line"><span>Train at</span></span>
+        <span class="line"><span><span class="thrust" id="thrust">full thrust.</span></span></span>
+      </h1>
+      <p class="hero-sub fade-in d3">Musculation, cardio mix, spinning, pump and more on Rue de Sfax in Radès. Show up, push hard, and leave stronger than you came in.</p>
+      <div class="hero-cta fade-in d4">
+        <a href="#plans" class="btn btn-primary">Start your membership</a>
+        <a href="#programs" class="btn btn-ghost">See programs</a>
+      </div>
+    </div>
+    <div class="badge fade-in d4">
+      <svg viewBox="0 0 200 200" role="img" aria-label="Train faster, lift stronger">
+        <defs><path id="circ" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+        <text fill="#F2F0EB" font-family="Space Grotesk, sans-serif" font-size="15" font-weight="700" letter-spacing="5"><textPath href="#circ">TRAIN FASTER • LIFT STRONGER • JET CLUB •</textPath></text>
+        <circle cx="100" cy="100" r="34" fill="#A8E63A"/>
+        <path d="M88 112 L108 88 M98 88 L108 88 L108 98" stroke="#09090A" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="band" aria-hidden="true">
+  <div class="track">
+    <span>Musculation</span><span>Cardio mix</span><span>Spinning</span><span>Pump</span><span>Grit / TRX</span><span>Danse orientale</span><span>Cours femmes</span>
+    <span>Musculation</span><span>Cardio mix</span><span>Spinning</span><span>Pump</span><span>Grit / TRX</span><span>Danse orientale</span><span>Cours femmes</span>
+  </div>
+</div>
+
+<section class="about wrap" id="about" aria-labelledby="aboutTitle">
+  <div class="about-top">
+    <h2 class="reveal" id="aboutTitle">Built for people who don’t coast.</h2>
+    <div class="about-text reveal">
+      <p>Jet Club is a training floor for every level — first-timers finding their rhythm and regulars chasing a new personal best. The equipment is serious, the coaches are on the floor, and the energy carries you through the last set.</p>
+      <p>Our motto says it best: fitness isn’t about being better than someone else. It’s about being better than the person you were yesterday.</p>
+    </div>
+  </div>
+  <div class="perks">
+    <div class="perk reveal">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#A8E63A" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 7v10M18 7v10M3 10v4M21 10v4M6 12h12"/></svg>
+      <h3>Serious equipment</h3>
+      <p>Free weights, racks and machines laid out so you’re never waiting long.</p>
+    </div>
+    <div class="perk reveal">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#A8E63A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+      <h3>Coaches on the floor</h3>
+      <p>Ask for a form check, a plan, or a push when you need one.</p>
+    </div>
+    <div class="perk reveal">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#A8E63A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+      <h3>High-energy classes</h3>
+      <p>Group sessions that make the hard work feel shorter.</p>
+    </div>
+    <div class="perk reveal">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#A8E63A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <h3>Open long hours</h3>
+      <p>06:30 to 22:00 on weekdays, plus Saturday and Sunday sessions.</p>
+    </div>
+  </div>
+</section>
+
+<section class="programs" id="programs" aria-labelledby="progTitle">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 id="progTitle">Pick your<br>flight path.</h2>
+      <p>Lift, ride, dance or sweat it out. Mix and match through the week.</p>
+    </div>
+    <div class="prog-list">
+      <div class="prog reveal"><h3>Musculation</h3><p>Free weights, racks and machines for building real, measurable strength.</p><span class="arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      <div class="prog reveal"><h3>Cardio mix</h3><p>Treadmills plus mixed cardio sessions to build your engine and burn hard.</p><span class="arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      <div class="prog reveal"><h3>Spinning</h3><p>High-intensity indoor cycling. Short, loud and seriously sweaty.</p><span class="arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      <div class="prog reveal"><h3>Pump</h3><p>Barbell workouts to music. Light weights, lots of reps, full-body burn.</p><span class="arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      <div class="prog reveal"><h3>Grit / TRX</h3><p>Suspension training and HIIT circuits that use your own bodyweight.</p><span class="arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      <div class="prog reveal"><h3>Danse orientale</h3><p>Oriental dance classes. Great cardio that doesn’t feel like cardio.</p><span class="arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery wrap" aria-labelledby="galTitle">
+  <div class="sec-head reveal">
+    <h2 id="galTitle">Follow the club.</h2>
+    <a class="ig" href="https://www.instagram.com/jet_club_" target="_blank" rel="noopener">Join 5,400+ followers on @jet_club_</a>
+  </div>
+  <div class="ig-grid">
+    <a class="ig-card reveal" href="https://www.instagram.com/jet_club_/p/DX7FP4pCHEg/" target="_blank" rel="noopener">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#A8E63A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+      <h3>Prices and plans</h3><p>All memberships, from 60 DT a month.</p><span class="ig-go">Open on Instagram</span>
+    </a>
+    <a class="ig-card reveal" href="https://www.instagram.com/jet_club_/p/DWrbZyniIP_/" target="_blank" rel="noopener">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#A8E63A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0"/></svg>
+      <h3>Class times</h3><p>Morning formula, open access and women’s classes.</p><span class="ig-go">Open on Instagram</span>
+    </a>
+    <a class="ig-card reveal" href="https://www.instagram.com/jet_club_/reels/" target="_blank" rel="noopener">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#A8E63A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      <h3>Workout videos</h3><p>See members and coaches training on the floor.</p><span class="ig-go">Open on Instagram</span>
+    </a>
+  </div>
+</section>
+
+<section class="plans wrap" id="plans" aria-labelledby="planTitle">
+  <div class="sec-head reveal">
+    <h2 id="planTitle">Choose your ticket.</h2>
+    <p>Prices in Tunisian dinars. One-time registration fee: 30 DT.</p>
+  </div>
+  <div class="plan-grid">
+    <article class="plan reveal">
+      
+      <h3>Abonnement matinal</h3>
+      <div class="price"><strong>80</strong><span>DT / month</span></div>
+      <p>For early birds. Train any morning from opening until 15:00.</p>
+      <ul><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8E63A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Access until 15:00</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8E63A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Weights and cardio zone</li></ul>
+      <a href="#visit" class="btn btn-ghost">Join with Abonnement matinal</a>
+    </article>
+    <article class="plan featured reveal">
+      <span class="tag">Most popular</span>
+      <h3>Accès libre</h3>
+      <div class="price"><strong>100</strong><span>DT / month</span></div>
+      <p>Come whenever you like, any time the club is open.</p>
+      <ul><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8E63A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Open access until 22:00</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8E63A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Weights and cardio zone</li></ul>
+      <a href="#visit" class="btn btn-primary">Join with Accès libre</a>
+    </article>
+    <article class="plan reveal">
+      
+      <h3>Cours femmes</h3>
+      <div class="price"><strong>60</strong><span>DT / month</span></div>
+      <p>Women’s group classes every Monday, Wednesday and Friday at 8:45.</p>
+      <ul><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8E63A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Mon · Wed · Fri at 8:45</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8E63A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Coach-led sessions</li></ul>
+      <a href="#visit" class="btn btn-ghost">Join with Cours femmes</a>
+    </article>
+  </div>
+  <div class="commit reveal">
+    <div class="commit-copy">
+      <h3>Commit longer, pay less.</h3>
+      <p>Accès libre paid upfront. Pick a length to see what you save.</p>
+      <div class="toggle" role="group" aria-label="Membership length" id="toggle">
+        <span class="pill" id="pill" aria-hidden="true"></span>
+        <button type="button" aria-pressed="false" data-m="3">3 months</button>
+        <button type="button" aria-pressed="false" data-m="6">6 months</button>
+        <button type="button" aria-pressed="true" data-m="12">1 year</button>
+      </div>
+    </div>
+    <div class="commit-result" aria-live="polite">
+      <div class="price"><strong class="swap" id="cTotal">840</strong><span>DT total</span></div>
+      <p id="cMonth">That’s 70 DT a month</p>
+      <p class="save" id="cSave">You save 360 DT compared with paying monthly</p>
+    </div>
+  </div>
+  <p class="note">Call 22 065 780 or message us on Instagram to sign up.</p>
+</section>
+
+<section class="visit" id="visit" aria-labelledby="visitTitle">
+  <div class="ghost" aria-hidden="true"><div class="track"><span>Jet Club</span><span>Jet Club</span><span>Jet Club</span><span>Jet Club</span></div></div>
+  <div class="wrap visit-inner">
+    <div class="visit-copy reveal">
+      <h2 id="visitTitle">Your first session starts here.</h2>
+      <div class="visit-cta">
+        <a href="https://www.instagram.com/jet_club_" target="_blank" rel="noopener" class="btn btn-dark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          Message us on Instagram
+        </a>
+        <a href="tel:+21622065780" class="btn btn-line">Call 22 065 780</a>
+      </div>
+    </div>
+    <dl class="info reveal">
+      <div><dt>Address</dt><dd>95 Rue de Sfax, Radès 2040<br><a href="https://maps.app.goo.gl/E9WzUrHs78N7WgRK6" target="_blank" rel="noopener">Get directions</a></dd></div>
+      <div><dt>Hours <span id="openNow" style="margin-left:8px;font-weight:700"></span></dt><dd>Mon–Fri: 06:30–22:00<br>Saturday: 07:00–17:00<br>Sunday: 08:00–14:00</dd></div>
+      <div><dt>Email</dt><dd><a href="mailto:rades.jetclub@gmail.com">rades.jetclub@gmail.com</a></dd></div>
+      <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/jet_club_" target="_blank" rel="noopener">@jet_club_</a></dd></div>
+    </dl>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a href="#top" class="logo" aria-label="Back to top"><span style="font-style:italic">JET <b style="font-weight:400;color:#A8E63A">CLUB</b></span></a>
+    <span>© <span id="year">2026</span> Jet Club</span>
+    <a href="#top">Back to top</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // page-load sequence
+  requestAnimationFrame(function(){ document.body.classList.add('loaded'); });
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // header + progress
+  var header = document.getElementById('header');
+  var progress = document.getElementById('progress');
+  function onScroll(){
+    var y = window.scrollY;
+    header.classList.toggle('scrolled', y > 10);
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.transform = 'scaleX(' + (max > 0 ? y / max : 0) + ')';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // mobile menu
+  var menuBtn = document.getElementById('menuBtn');
+  var links = document.getElementById('links');
+  var icon = document.getElementById('menuIcon');
+  function setMenu(open){
+    links.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', open);
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    icon.setAttribute('d', open ? 'M6 6l12 12M18 6L6 18' : 'M4 7h16M4 12h16M4 17h16');
+  }
+  menuBtn.addEventListener('click', function(){ setMenu(!links.classList.contains('open')); });
+  links.addEventListener('click', function(e){ if (e.target.closest('a')) setMenu(false); });
+
+  // scroll reveal
+  var els = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) {
+    els.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          var sibs = Array.prototype.filter.call(en.target.parentNode.children, function(c){ return c.classList.contains('reveal'); });
+          var i = sibs.indexOf(en.target);
+          en.target.style.transitionDelay = (Math.max(i,0) * 80) + 'ms';
+          en.target.classList.add('in');
+          io.unobserve(en.target);
+        }
+      });
+    }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(el){ io.observe(el); });
+  }
+
+  // membership length toggle
+  var toggle = document.getElementById('toggle');
+  var pill = document.getElementById('pill');
+  var btns = toggle.querySelectorAll('button');
+  var prices = {3:270, 6:480, 12:840};
+  function placePill(btn){
+    pill.style.width = btn.offsetWidth + 'px';
+    pill.style.transform = 'translateX(' + (btn.offsetLeft - 6) + 'px)';
+  }
+  function setLen(btn){
+    var m = +btn.dataset.m, total = prices[m];
+    btns.forEach(function(b){ b.setAttribute('aria-pressed', b === btn); });
+    placePill(btn);
+    var t = document.getElementById('cTotal');
+    t.classList.add('out');
+    setTimeout(function(){ t.textContent = total; t.classList.remove('out'); }, reduce ? 0 : 200);
+    document.getElementById('cMonth').textContent = 'That’s ' + Math.round(total / m) + ' DT a month';
+    document.getElementById('cSave').textContent = 'You save ' + (100 * m - total) + ' DT compared with paying monthly';
+  }
+  btns.forEach(function(b){ b.addEventListener('click', function(){ setLen(b); }); });
+  function initPill(){ placePill(toggle.querySelector('[aria-pressed="true"]')); }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(initPill);
+  window.addEventListener('resize', initPill);
+  initPill();
+
+  // live open/closed status (Tunisia time)
+  (function(){
+    var hours = {0:[8,14],1:[6.5,22],2:[6.5,22],3:[6.5,22],4:[6.5,22],5:[6.5,22],6:[7,17]};
+    try {
+      var parts = new Intl.DateTimeFormat('en-GB',{timeZone:'Africa/Tunis',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+      var get = function(t){ var p = parts.find(function(x){ return x.type === t; }); return p ? p.value : ''; };
+      var day = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(get('weekday'));
+      var now = parseInt(get('hour'),10) % 24 + parseInt(get('minute'),10) / 60;
+      var h = hours[day];
+      var open = h && now >= h[0] && now < h[1];
+      var pad = function(n){ var h=Math.floor(n), m=Math.round((n-h)*60); return (h<10?'0':'')+h+':'+(m<10?'0':'')+m; };
+      var tag = document.getElementById('openNow');
+      var hero = document.getElementById('heroStatus');
+      if (open) {
+        tag.textContent = 'Open now'; tag.style.color = '#7EE08A';
+        hero.textContent = 'Open now in Radès, until ' + pad(h[1]);
+      } else {
+        tag.textContent = 'Closed now'; tag.style.color = '#A8A49D';
+        var next = (now < (h ? h[0] : 0)) ? h : hours[(day + 1) % 7];
+        hero.textContent = 'Gym in Radès. Opens ' + (now < (h ? h[0] : 0) ? 'today' : 'tomorrow') + ' at ' + pad(next[0]);
+      }
+    } catch(e) {}
+  })();
+
+  // hero speed streaks
+  var cv = document.getElementById('streaks');
+  var ctx = cv.getContext('2d');
+  var W, H, dpr, streaks = [];
+  function size(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = cv.offsetWidth; H = cv.offsetHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function spawn(init){
+    return { x: init ? Math.random() * W : -400, y: Math.random() * H, len: 80 + Math.random() * 340, speed: 6 + Math.random() * 14, w: Math.random() < .2 ? 2.5 : 1.2, a: .25 + Math.random() * .6 };
+  }
+  var mouseY = null;
+  cv.parentNode.addEventListener('pointermove', function(e){ var r = cv.getBoundingClientRect(); mouseY = e.clientY - r.top; });
+  cv.parentNode.addEventListener('pointerleave', function(){ mouseY = null; });
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    for (var i = 0; i < streaks.length; i++){
+      var s = streaks[i];
+      var boost = mouseY !== null ? Math.max(0, 1 - Math.abs(s.y - mouseY) / 140) * 14 : 0;
+      s.x += s.speed + boost;
+      var g = ctx.createLinearGradient(s.x - s.len, 0, s.x, 0);
+      g.addColorStop(0, 'rgba(168,230,58,0)');
+      g.addColorStop(1, 'rgba(168,230,58,' + s.a + ')');
+      ctx.strokeStyle = g; ctx.lineWidth = s.w; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(s.x - s.len, s.y); ctx.lineTo(s.x, s.y); ctx.stroke();
+      if (s.x - s.len > W) streaks[i] = spawn(false);
+    }
+    if (running) requestAnimationFrame(frame);
+  }
+  var running = false;
+  size();
+  var count = W < 600 ? 18 : 36;
+  for (var i = 0; i < count; i++) streaks.push(spawn(true));
+  window.addEventListener('resize', size);
+  if (!reduce) {
+    var heroIO = new IntersectionObserver(function(en){
+      var vis = en[0].isIntersecting;
+      if (vis && !running){ running = true; requestAnimationFrame(frame); }
+      else if (!vis) running = false;
+    });
+    heroIO.observe(cv);
+  } else { frame(); }
+})();
+</script>
+</body>
+</html>
